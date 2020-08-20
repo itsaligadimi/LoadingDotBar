@@ -1,27 +1,29 @@
 package com.agadimi.loadingdotbar;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Size;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.Dimension;
 import androidx.annotation.Nullable;
 
-public class LoadingDotBarView extends View
+public class LoadingDotBarView extends View implements Animator.AnimatorListener, ValueAnimator.AnimatorUpdateListener
 {
     private final String LOG_TAG = "LoadingDotBarView";
 
-    private int dotColor, dotRadius, barHeight, gapSize;
-    private Paint circlePaint;
+    private int dotColor, dotRadius, barHeight, gapSize, duration, animationCycleDelay;
+    private Paint dotbarPaint;
 
-    private int halfHeight, dotOneX, dotTwoX, dotThreeX;
+    private int halfHeight, dotOneX, dotTwoX, dotThreeX, movementRange;
+
+    private ValueAnimator animator;
+    private int currentBarHeightONE, currentBarHeightTWO, currentBarHeightTHREE;
+    private boolean runAnimation = false;
 
     public LoadingDotBarView(Context context, @Nullable AttributeSet attrs)
     {
@@ -38,12 +40,43 @@ public class LoadingDotBarView extends View
             dotRadius = a.getDimensionPixelSize(R.styleable.LoadingDotBar_dot_radius, getResources().getDimensionPixelSize(R.dimen.dot_radius_default));
             barHeight = a.getDimensionPixelSize(R.styleable.LoadingDotBar_bar_height, getResources().getDimensionPixelSize(R.dimen.bar_height_default));
             gapSize = a.getDimensionPixelSize(R.styleable.LoadingDotBar_gap_size, getResources().getDimensionPixelSize(R.dimen.gap_size_default));
+            duration = a.getInt(R.styleable.LoadingDotBar_duration, 1000);
+            animationCycleDelay = a.getInt(R.styleable.LoadingDotBar_animation_cycle_delay, 1000);
         } finally
         {
             a.recycle();
         }
 
-        init();
+
+    }
+
+    private void init()
+    {
+        dotbarPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dotbarPaint.setColor(dotColor);
+
+        animator = ValueAnimator.ofInt(0, 7 * (movementRange / 2)); // animating dots is divided to 7 parts
+        animator.setDuration(1000);
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.addUpdateListener(this);
+        animator.addListener(this);
+    }
+
+    public void start()
+    {
+        runAnimation = true;
+        animator.setStartDelay(0);
+        animator.start();
+    }
+
+    public void end(boolean immediateStop)
+    {
+        runAnimation = false;
+
+        if (immediateStop)
+        {
+            animator.end();
+        }
     }
 
     public int getDotColor()
@@ -95,17 +128,12 @@ public class LoadingDotBarView extends View
     }
 
 
-    private void init()
-    {
-        circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        circlePaint.setColor(dotColor);
-    }
-
+    //todo: fix setting padding to 0
     @Override
     public int getPaddingLeft()
     {
         int superPad = super.getPaddingLeft();
-        return  superPad> 0 ? superPad : getResources().getDimensionPixelSize(R.dimen.x_padding_default);
+        return superPad > 0 ? superPad : getResources().getDimensionPixelSize(R.dimen.x_padding_default);
     }
 
     @Override
@@ -138,9 +166,6 @@ public class LoadingDotBarView extends View
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        Log.d(LOG_TAG, String.format("widthMeasureSpec: %d, mode: %d", MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getMode(widthMeasureSpec)));
-        Log.d(LOG_TAG, String.format("heightMeasureSpec: %d, mode: %d", MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.getMode(heightMeasureSpec)));
-
         int padLeft = getPaddingLeft();
         int padTop = getPaddingTop();
         int padRight = getPaddingRight();
@@ -153,15 +178,15 @@ public class LoadingDotBarView extends View
                 padRight;
         int height = barHeight + padTop + padBottom;
 
-        //calculate positions of the dots
+        //calculate positions and helper sizes
         halfHeight = height / 2;
         dotOneX = padLeft + dotRadius;
         dotTwoX = padLeft + (3 * dotRadius) + gapSize;
         dotThreeX = padLeft + (5 * dotRadius) + (2 * gapSize);
+        movementRange = barHeight - (2 * dotRadius);
 
-
-        Log.d(LOG_TAG, String.format("final dimensions: %d * %d", width, height));
         setMeasuredDimension(width, height);
+        init();
     }
 
     @Override
@@ -169,11 +194,119 @@ public class LoadingDotBarView extends View
     {
         super.onDraw(canvas);
 
-        Log.d(LOG_TAG, dotOneX + ", " + dotTwoX + ", " + dotThreeX);
-        Log.d(LOG_TAG, "half height: " + halfHeight);
+        drawBar(canvas, dotOneX, currentBarHeightONE);
+        drawBar(canvas, dotTwoX, currentBarHeightTWO);
+        drawBar(canvas, dotThreeX, currentBarHeightTHREE);
+    }
 
-        canvas.drawCircle(dotOneX, halfHeight, dotRadius, circlePaint);
-        canvas.drawCircle(dotTwoX, halfHeight, dotRadius, circlePaint);
-        canvas.drawCircle(dotThreeX, halfHeight, dotRadius, circlePaint);
+
+    /**
+     * to draw a rounded bar, we draw two circles and a rectangle in between covering half of the circles
+     *
+     * @param canvas
+     * @param barXCenter
+     * @param barHeight
+     */
+    private void drawBar(Canvas canvas, int barXCenter, int barHeight)
+    {
+        if (barHeight == 0)
+        {
+            canvas.drawCircle(barXCenter, halfHeight, dotRadius, dotbarPaint);
+        } else if (barHeight == 1)
+        {
+            canvas.drawCircle(barXCenter, halfHeight, dotRadius, dotbarPaint);
+            canvas.drawCircle(barXCenter, halfHeight + 1, dotRadius, dotbarPaint);
+        } else
+        {
+            int halfBarHeight = barHeight / 2;
+            canvas.drawCircle(barXCenter, halfHeight + halfBarHeight, dotRadius, dotbarPaint); // draw below circle
+            canvas.drawCircle(barXCenter, halfHeight - halfBarHeight, dotRadius, dotbarPaint); // draw above circle
+            canvas.drawRect(barXCenter - dotRadius,
+                    halfHeight + halfBarHeight,
+                    barXCenter + dotRadius,
+                    halfHeight - halfBarHeight,
+                    dotbarPaint);
+        }
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation)
+    {
+        int value = (int) animation.getAnimatedValue();
+        int halfMovementRange = movementRange / 2;
+
+        byte animationPart = (byte) (value / halfMovementRange);
+
+        switch (animationPart)
+        {
+            case 0:
+                currentBarHeightONE = value;
+                currentBarHeightTWO = 0;
+                currentBarHeightTHREE = 0;
+                break;
+
+            case 1:
+                currentBarHeightONE = value;
+                currentBarHeightTWO = value - halfMovementRange;
+                currentBarHeightTHREE = 0;
+                break;
+
+            case 2:
+                currentBarHeightONE = movementRange;
+                currentBarHeightTWO = value - halfMovementRange;
+                currentBarHeightTHREE = value - movementRange;
+                break;
+
+            case 3:
+                currentBarHeightONE = movementRange - (value - (3 * halfMovementRange));
+                currentBarHeightTWO = movementRange;
+                currentBarHeightTHREE = value - movementRange;
+                break;
+
+            case 4:
+                currentBarHeightONE = movementRange - (value - (3 * halfMovementRange));
+                currentBarHeightTWO = movementRange - (value - (4 * halfMovementRange));
+                currentBarHeightTHREE = movementRange;
+                break;
+
+            case 5:
+                currentBarHeightONE = 0;
+                currentBarHeightTWO = movementRange - (value - (4 * halfMovementRange));
+                currentBarHeightTHREE = movementRange - (value - (5 * halfMovementRange));
+                break;
+
+            case 6:
+                currentBarHeightONE = 0;
+                currentBarHeightTWO = 0;
+                currentBarHeightTHREE = movementRange - (value - (5 * halfMovementRange));
+                break;
+        }
+
+        invalidate();
+    }
+
+    @Override
+    public void onAnimationStart(Animator animation)
+    {
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation)
+    {
+        if (runAnimation)
+        {
+            animator.setStartDelay(1000);
+            animator.start();
+        }
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation)
+    {
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation)
+    {
     }
 }
