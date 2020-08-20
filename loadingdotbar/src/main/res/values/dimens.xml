@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dot_radius_default">4dp</dimen>
+    <dimen name="bar_height_default">22dp</dimen>
+    <dimen name="gap_size_default">5dp</dimen>
+    <dimen name="y_padding_default">9dp</dimen>
+    <dimen name="x_padding_default">20dp</dimen>
+</resources>

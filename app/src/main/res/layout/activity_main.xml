@@ -26,10 +26,85 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/green"
+            android:background="@drawable/round_green"
+            android:stateListAnimator="@null"
             android:text="Process input"
-            android:textColor="@color/black"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+
+        <com.agadimi.loadingdotbar.LoadingDotBarView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/round_orange"
+            android:paddingLeft="20dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/round_green"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="16dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="16dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/circle_white" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/circle_white" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/circle_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/round_green"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="9dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="9dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/round_white" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/round_white" />
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/round_white" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

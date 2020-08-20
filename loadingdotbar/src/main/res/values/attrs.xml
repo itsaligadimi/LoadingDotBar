@@ -4,5 +4,6 @@
         <attr name="dot_color" format="color" />
         <attr name="dot_radius" format="dimension" />
         <attr name="bar_height" format="dimension" />
+        <attr name="gap_size" format="dimension" />
     </declare-styleable>
 </resources>
