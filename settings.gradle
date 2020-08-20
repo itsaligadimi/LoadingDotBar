@@ -1,0 +1,3 @@
+include ':loadingdotbar'
+include ':app'
+rootProject.name = "LoadingDotBar"
