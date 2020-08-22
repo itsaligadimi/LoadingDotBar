@@ -31,17 +31,17 @@ public class LoadingDotBarView extends View implements Animator.AnimatorListener
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.LoadingDotBar,
+                R.styleable.LoadingDotBarView,
                 0, 0);
 
         try
         {
-            dotColor = a.getColor(R.styleable.LoadingDotBar_dot_color, getResources().getColor(R.color.dot_color_default));
-            dotRadius = a.getDimensionPixelSize(R.styleable.LoadingDotBar_dot_radius, getResources().getDimensionPixelSize(R.dimen.dot_radius_default));
-            barHeight = a.getDimensionPixelSize(R.styleable.LoadingDotBar_bar_height, getResources().getDimensionPixelSize(R.dimen.bar_height_default));
-            gapSize = a.getDimensionPixelSize(R.styleable.LoadingDotBar_gap_size, getResources().getDimensionPixelSize(R.dimen.gap_size_default));
-            duration = a.getInt(R.styleable.LoadingDotBar_duration, 1000);
-            animationCycleDelay = a.getInt(R.styleable.LoadingDotBar_animation_cycle_delay, 1000);
+            dotColor = a.getColor(R.styleable.LoadingDotBarView_dot_color, getResources().getColor(R.color.dot_color_default));
+            dotRadius = a.getDimensionPixelSize(R.styleable.LoadingDotBarView_dot_radius, getResources().getDimensionPixelSize(R.dimen.dot_radius_default));
+            barHeight = a.getDimensionPixelSize(R.styleable.LoadingDotBarView_bar_height, getResources().getDimensionPixelSize(R.dimen.bar_height_default));
+            gapSize = a.getDimensionPixelSize(R.styleable.LoadingDotBarView_gap_size, getResources().getDimensionPixelSize(R.dimen.gap_size_default));
+            duration = a.getInt(R.styleable.LoadingDotBarView_duration, 1000);
+            animationCycleDelay = a.getInt(R.styleable.LoadingDotBarView_animation_cycle_delay, 1000);
         } finally
         {
             a.recycle();
@@ -56,7 +56,7 @@ public class LoadingDotBarView extends View implements Animator.AnimatorListener
         dotbarPaint.setColor(dotColor);
 
         animator = ValueAnimator.ofInt(0, 7 * (movementRange / 2)); // animating dots is divided to 7 parts
-        animator.setDuration(1000);
+        animator.setDuration(duration);
         animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.addUpdateListener(this);
         animator.addListener(this);
@@ -125,36 +125,6 @@ public class LoadingDotBarView extends View implements Animator.AnimatorListener
         this.gapSize = gapSize;
         invalidate();
         requestLayout();
-    }
-
-
-    //todo: fix setting padding to 0
-    @Override
-    public int getPaddingLeft()
-    {
-        int superPad = super.getPaddingLeft();
-        return superPad > 0 ? superPad : getResources().getDimensionPixelSize(R.dimen.x_padding_default);
-    }
-
-    @Override
-    public int getPaddingTop()
-    {
-        int superPad = super.getPaddingTop();
-        return superPad > 0 ? superPad : getResources().getDimensionPixelSize(R.dimen.y_padding_default);
-    }
-
-    @Override
-    public int getPaddingRight()
-    {
-        int superPad = super.getPaddingRight();
-        return superPad > 0 ? superPad : getResources().getDimensionPixelSize(R.dimen.x_padding_default);
-    }
-
-    @Override
-    public int getPaddingBottom()
-    {
-        int superPad = super.getPaddingBottom();
-        return superPad > 0 ? superPad : getResources().getDimensionPixelSize(R.dimen.y_padding_default);
     }
 
     /**
@@ -295,7 +265,7 @@ public class LoadingDotBarView extends View implements Animator.AnimatorListener
     {
         if (runAnimation)
         {
-            animator.setStartDelay(1000);
+            animator.setStartDelay(animationCycleDelay);
             animator.start();
         }
     }

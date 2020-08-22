@@ -4,52 +4,171 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_back" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/border_round_orange"
-                android:hint="input"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:textColor="@color/black" />
-
-            <com.agadimi.loadingdotbar.LoadingDotBarView
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="4dp"
-                android:background="@drawable/round_orange"
-                android:visibility="invisible" />
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/process_btn"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/round_green"
-            android:stateListAnimator="@null"
-            android:text="Process input"
-            android:textAllCaps="false"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:layout_gravity="center"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_more" />
+    </FrameLayout>
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/roundedImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/pizza_dribbble"
+        app:layout_constraintDimensionRatio="H,4:3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:riv_corner_radius="10dip" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="A pizza name"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roundedImageView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="Pizza Category"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="3dp"
+        android:text="Here goes a description about the pizza above and describing the ingredients of the pizza."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/border_top_bottom"
+        app:layout_constraintBottom_toTopOf="@id/add_to_cart_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteX="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:text="Price"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:text="$23"
+            android:textColor="@color/orange"
+            android:textSize="20dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/add_to_cart_btn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/round_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/add_to_wish_btn">
+
+        <com.agadimi.loadingdotbar.LoadingDotBarView
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:translationY="-50dp"
+            app:animation_cycle_delay="200"
+            app:dot_color="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add to cart"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/add_to_wish_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/round_orange"
+        android:padding="18dp"
+        android:scaleType="fitCenter"
+        android:stateListAnimator="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_heart" />
 </androidx.constraintlayout.widget.ConstraintLayout>
