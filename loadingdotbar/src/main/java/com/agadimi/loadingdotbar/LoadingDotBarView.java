@@ -47,11 +47,13 @@ public class LoadingDotBarView extends View implements Animator.AnimatorListener
             a.recycle();
         }
 
-
+        init();
     }
 
     private void init()
     {
+        movementRange = barHeight - (2 * dotRadius);
+
         dotbarPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         dotbarPaint.setColor(dotColor);
 
@@ -153,10 +155,8 @@ public class LoadingDotBarView extends View implements Animator.AnimatorListener
         dotOneX = padLeft + dotRadius;
         dotTwoX = padLeft + (3 * dotRadius) + gapSize;
         dotThreeX = padLeft + (5 * dotRadius) + (2 * gapSize);
-        movementRange = barHeight - (2 * dotRadius);
 
         setMeasuredDimension(width, height);
-        init();
     }
 
     @Override

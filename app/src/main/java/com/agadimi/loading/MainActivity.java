@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         FrameLayout addToCartBtn = findViewById(R.id.add_to_cart_btn);
-//
         addToCartBtn.setOnClickListener(v -> {
             if (loading)
             {
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity
                     .setInterpolator(new DecelerateInterpolator())
                     .start();
 
-            Log.d("SSSSSSSS", "started at: " + System.currentTimeMillis());
             loadingView.setTranslationY(-translationYpx);
             loadingView.setAlpha(0.5f);
             loadingView.animate()
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onAnimationEnd(Animator animation)
                         {
-                            Log.d("SSSSSSSS", "ended at: " + System.currentTimeMillis());
                             loadingView.start();
                         }
                     })
