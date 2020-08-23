@@ -2,6 +2,10 @@
 
 A custom loading view in which dots turn into bars and back again :D
 
+![one](https://raw.githubusercontent.com/itsaligadimi/LoadingDotBar/master/20200823_122254.jpg)
+![two](https://raw.githubusercontent.com/itsaligadimi/LoadingDotBar/master/20200823_121711.jpg)
+![three](https://raw.githubusercontent.com/itsaligadimi/LoadingDotBar/master/20200823_122246.jpg)
+
 ## Installation
 
 Step 2. Add it in your root build.gradle at the end of repositories:
@@ -31,9 +35,15 @@ Step 2. Add the dependency
     app:bar_height="22dp"
     app:dot_radius="4dp"
     app:gap_size="5dp"/>
+    
+    
+LoadingDotBarView loadingDotBarView = findViewById(R.id.loading);
+loadingDotBarView.start();
+loadingDotBarView.end();
 ```
 width and height of the view are calculated based on the size of dots. So you can keep them 'wrap_content'.
 
+### Attributes
 **duration**: (milliseconds) the time it takes to complete a cycle
 
 **animation_cycle_delay**: (milliseconds) the delay between each cycle
@@ -46,5 +56,16 @@ width and height of the view are calculated based on the size of dots. So you ca
 
 **gap_size**: (dimension) the gap between each dot
 
+### Functions
+**start()**: start the animation
+
+**end()**: end the animation
+
 ## Contributing
 If you wanna change anything, feel free to do it
+
+
+## Reference
+Image and Demo UI are from dribbble
+[UI](https://dribbble.com/shots/13995546-Mobile-application-Kitchen/),
+[Pizza](https://dribbble.com/shots/4440645-Pizza)
