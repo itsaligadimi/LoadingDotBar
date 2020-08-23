@@ -39,9 +39,11 @@ Step 2. Add the dependency
     
 LoadingDotBarView loadingDotBarView = findViewById(R.id.loading);
 loadingDotBarView.start();
+loadingDotBarView.end();
 ```
 width and height of the view are calculated based on the size of dots. So you can keep them 'wrap_content'.
 
+### Attributes
 **duration**: (milliseconds) the time it takes to complete a cycle
 
 **animation_cycle_delay**: (milliseconds) the delay between each cycle
@@ -53,6 +55,11 @@ width and height of the view are calculated based on the size of dots. So you ca
 **dot_radius**: (dimension) dot radius
 
 **gap_size**: (dimension) the gap between each dot
+
+### Functions
+**start()**: start the animation
+
+**end()**: end the animation
 
 ## Contributing
 If you wanna change anything, feel free to do it
