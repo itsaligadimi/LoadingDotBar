@@ -35,6 +35,10 @@ Step 2. Add the dependency
     app:bar_height="22dp"
     app:dot_radius="4dp"
     app:gap_size="5dp"/>
+    
+    
+LoadingDotBarView loadingDotBarView = findViewById(R.id.loading);
+loadingDotBarView.start();
 ```
 width and height of the view are calculated based on the size of dots. So you can keep them 'wrap_content'.
 
