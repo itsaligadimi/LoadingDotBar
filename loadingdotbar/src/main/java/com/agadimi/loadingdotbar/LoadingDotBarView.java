@@ -59,7 +59,6 @@ public class LoadingDotBarView extends View implements Animator.AnimatorListener
 
         animator = ValueAnimator.ofInt(0, 7 * (movementRange / 2)); // animating dots is divided to 7 parts
         animator.setDuration(duration);
-        animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.addUpdateListener(this);
         animator.addListener(this);
     }
