@@ -1,4 +1,4 @@
-# Loading.Bar
+# Loading.Bar [![](https://jitpack.io/v/itsaligadimi/LoadingDotBar.svg)](https://jitpack.io/#itsaligadimi/LoadingDotBar)
 
 A custom loading view in which dots turn into bars and back again :D
 
@@ -19,7 +19,7 @@ Step 2. Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.itsaligadimi:LoadingDotBar:v1.0'
+	        implementation 'com.github.itsaligadimi:LoadingDotBar:v1.1'
 	}
 
 ## Usage
