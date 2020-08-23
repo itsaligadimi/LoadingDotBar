@@ -2,6 +2,10 @@
 
 A custom loading view in which dots turn into bars and back again :D
 
+![one](https://raw.githubusercontent.com/itsaligadimi/LoadingDotBar/master/20200823_122254.jpg)
+![two](https://raw.githubusercontent.com/itsaligadimi/LoadingDotBar/master/20200823_121711.jpg)
+![three](https://raw.githubusercontent.com/itsaligadimi/LoadingDotBar/master/20200823_122246.jpg)
+
 ## Installation
 
 Step 2. Add it in your root build.gradle at the end of repositories:
