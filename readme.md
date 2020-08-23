@@ -63,3 +63,9 @@ width and height of the view are calculated based on the size of dots. So you ca
 
 ## Contributing
 If you wanna change anything, feel free to do it
+
+
+## Reference
+Image and Demo UI are from dribbble
+[UI](https://dribbble.com/shots/13995546-Mobile-application-Kitchen/),
+[Pizza](https://dribbble.com/shots/4440645-Pizza)
